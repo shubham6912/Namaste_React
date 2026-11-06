@@ -1,0 +1,23 @@
+{
+  "name": "namaste_react",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/shubham6912/Namaste_React#readme",
+  "bugs": {
+    "url": "https://github.com/shubham6912/Namaste_React/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham6912/Namaste_React.git"
+  },
+  "license": "ISC",
+  "author": "Shubham",
+  "type": "commonjs",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  }
+}
