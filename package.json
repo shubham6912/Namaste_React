@@ -13,11 +13,21 @@
   "license": "ISC",
   "author": "Shubham",
   "type": "commonjs",
-  "main": "App.js",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
+
   },
   "devDependencies": {
     "parcel": "^2.16.4"
-  }
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "browserslist": [
+    "last 2 Chrome version",
+    "last 2 Firefox version"
+  ]
 }
