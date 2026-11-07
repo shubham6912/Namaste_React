@@ -1,6 +1,8 @@
-# CDN links is not a good way to bring react and react dom into the project
 
-# Install react and react-dom using npm instead of CDN
+- Also you can have react for only a part of your project other parts no need to touch
+- CDN links is not a good way to bring react and react dom into the project
+
+- Install react and react-dom using npm instead of CDN
 # Parcel
 - Dev Build
 - Local server
@@ -31,3 +33,21 @@
 - https://parceljs.org/docs/
 
 - React is fast since these bundlers are fast
+
+- All the above keep in mind for React Native as well
+
+- JSX  - HTML like syntax
+
+- JS Engine only understands ECMA SCript
+
+- Weather its pacel or babel or V8 engine good thing is its open source and pluggable anyone can use it as per their use case
+
+# Extension List
+- As we know now in AI world Extensions and Linters are more required
+- BetterComment
+- ESLint
+- GitLens
+- Bracket Code Formatter
+- Prettier ESLint
+
+- Component Composition Title inside Another func
