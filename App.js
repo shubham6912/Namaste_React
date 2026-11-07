@@ -44,19 +44,39 @@ const HeadingComponent = () => {
 };
 */
 
+// React Component
 const Title = () => (
     <h1 className="head" tabIndex="5">
         Namaste React using JSX
     </h1>
 )
 
+
+// React Element
+
+const elem = <span> ReacElement </span>
+const title = (
+    
+    <h1 className="head" tabIndex="5">
+        Namaste React using JSX 
+         {elem}
+       
+    </h1>
+    
+);
+
+const number=100
 const HeadingComponent2 = () => (
   <div id="container">
-    <Title/> 
+    {title}
     <h1 className="heading"> Namaste React Functional Component</h1>
+    <h2>{number *5}</h2>
+    {Title()}
   </div> 
 );
 
+
+// In JSX we can write { } and inside that we can write any JS code
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 

@@ -51,3 +51,10 @@
 - Prettier ESLint
 
 - Component Composition Title inside Another func
+
+- Play with component , Element , {} do the same for next js and others
+- Same do with AI , LangChain and others
+
+- JSX takes care of Malicious data and cross site scripting attack
+- It sanitized the data before running
+
