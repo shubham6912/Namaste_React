@@ -1,3 +1,168 @@
-#heading  {
- color:red
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8f8f8;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 50px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.logo img {
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+}
+
+.navItem ul {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  list-style: none;
+}
+
+.navItem li {
+  font-size: 17px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navItem li:hover {
+  color: #fc8019;
+}
+
+.navItem li:last-child {
+  background-color: #fc8019;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+}
+
+.navItem li:last-child:hover {
+  background-color: #e66e0d;
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .navItem ul {
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .navItem li {
+    font-size: 14px;
+  }
+}
+
+
+/* Body Container */
+.body-container {
+  padding: 30px 50px;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+/* Search Section */
+.search {
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Restaurant Container */
+.resturant-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+/* Restaurant Card */
+.resturant-card {
+  width: 260px;
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover Effect */
+.resturant-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Restaurant Image */
+.resturant-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Restaurant Information */
+.resturant-card span {
+  display: block;
+  padding: 4px 15px;
+  font-size: 15px;
+  color: #555;
+}
+
+/* Restaurant Name */
+.resturant-card span:nth-of-type(1) {
+  font-size: 19px;
+  font-weight: 700;
+  color: #222;
+  padding-top: 15px;
+}
+
+/* Cuisine */
+.resturant-card span:nth-of-type(2) {
+  color: #777;
+}
+
+/* Rating */
+.resturant-card span:nth-of-type(3) {
+  color: #24963f;
+  font-weight: 600;
+  padding-bottom: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .body-container {
+    padding: 20px 15px;
+  }
+
+  .resturant-card {
+    width: 100%;
+  }
 }

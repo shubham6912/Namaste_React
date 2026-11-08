@@ -1,83 +1,66 @@
-
 import React from "react";
 import * as ReactDOM from "react-dom/client";
+import logo from "url:./public/FoodCardLogo.png";
 
-// React.createElement => Object => HTMLElement(render)
+const Header = () => {
+  return (
+    <div className="header">
+      <div className="logo">
+        <img src={logo} alt="Food Card Logo" />
+      </div>
 
-const heading = React.createElement("h1" , 
-    { id : "heading"},
-    "Namaste React :)"
-);
-
-// To make react easier to write Facebook people created JSX
-
-console.log(heading);
-
-
-// JSX  - HTML like syntax or XML like syntax
-
-// JSX code transpiled before going to JS Engine which is done by PARCEL - Babel
-
-const jsxHeading =<h1 id="heading" className="head"> Namaste React using JSX </h1>;
-
-
-// If you are writing in multiple lines
-
-//const jsxHeadingMulti =(<h1 id="multipleHeading"> Multiple Heading</h1>);
-// JSX => React.createElement => ReacElement- JS Element Object => HTMLElement(render)
-
-console.log(jsxHeading)
-
-
-
-//React Component
-//Class Based components - OLD way
-// Functional Componnets - new way
-
-//Functional Component
-
-// Below examples both are same way of writing
-
-/*
-const HeadingComponent = () => {
-    return <h1 className="heading"> Namaste React Functional Component</h1>
+      <div className="navItem">
+        <ul>
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  );
 };
-*/
+const Body = () => {
+  return (
+    <div className="body-container">
+      <div className="search"> Search</div>
+      <div className="resturant-container">
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+        <ResturantCard />
+      </div>
+    </div>
+  );
+};
 
-// React Component
-const Title = () => (
-    <h1 className="head" tabIndex="5">
-        Namaste React using JSX
-    </h1>
-)
+const ResturantCard = () => {
+  return (
+    <div className="resturant-card">
+      <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/FOOD_CATALOG/IMAGES/CMS/2025/12/29/57bebf52-5a58-42e0-af9d-3d872d52de83_2d89d14b-3568-4be1-946d-1d7b0539edae.jpg"></img>
+      <span>Megha Foods</span>
+      <span>Biryani , North Indian , Asian</span>
+      <span>4.4 Star</span>
+      <span>38 mins</span>
+    </div>
+  );
+};
 
+const AppLayout = () => {
+  return (
+    <div className="app-layout">
+      <Header />
+      <Body />
+    </div>
+  );
+};
 
-// React Element
-
-const elem = <span> ReacElement </span>
-const title = (
-    
-    <h1 className="head" tabIndex="5">
-        Namaste React using JSX 
-         {elem}
-       
-    </h1>
-    
-);
-
-const number=100
-const HeadingComponent2 = () => (
-  <div id="container">
-    {title}
-    <h1 className="heading"> Namaste React Functional Component</h1>
-    <h2>{number *5}</h2>
-    {Title()}
-  </div> 
-);
-
-
-// In JSX we can write { } and inside that we can write any JS code
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-
-root.render(<HeadingComponent2/>);
+root.render(<AppLayout />);
