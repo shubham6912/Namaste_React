@@ -1,14 +1,12 @@
-
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "url:../../public/FoodCardLogo.png";
 
 const Header = () => {
   const [logInLogOut, setLogInLogOut] = useState("Login");
 
   const handleLogin = () => {
-    setLogInLogOut((prev) =>
-      prev === "Login" ? "Logout" : "Login"
-    );
+    setLogInLogOut((prev) => (prev === "Login" ? "Logout" : "Login"));
   };
 
   return (
@@ -19,15 +17,18 @@ const Header = () => {
 
       <nav className="navItem">
         <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact Us</Link>
+          </li>
           <li>Cart</li>
           <li>
-            <button
-              className="login-btn"
-              onClick={handleLogin}
-            >
+            <button className="login-btn" onClick={handleLogin}>
               {logInLogOut}
             </button>
           </li>
