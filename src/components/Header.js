@@ -1,11 +1,9 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "url:../../public/FoodCardLogo.png";
 
 const Header = () => {
   const [logInLogOut, setLogInLogOut] = useState("Login");
-
-  console.log("Header rendered");
 
   const handleLogin = () => {
     setLogInLogOut((prev) =>
