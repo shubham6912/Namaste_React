@@ -1,50 +1,61 @@
 import { useEffect } from "react";
+import { json, useParams } from "react-router-dom";
+import { useState } from "react";
+import Shimmer from "./Shimmer";
 
 const ResturantMenu = () => {
+  const [resInfo, setResInfo] = useState(null);
+  const {resId} = useParams();
+
   useEffect(() => {
     fetchMenu();
   }, []);
 
-
-const fetchMenu = async () => {
-  try {
-    const response = await fetch(
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9476696&lng=77.6891689&restaurantId=285473"
-    );
-
-    console.log("Status:", response.status);
-    console.log(
-      "Content-Type:",
-      response.headers.get("content-type")
-    );
-
-    if (response.status === 202) {
-      console.warn(
-        "Swiggy API returned 202. The request may be challenged by AWS WAF."
+  const fetchMenu = async () => {
+    try {
+      const response = await fetch(
+        "https://namastedev.com/api/v1/listRestaurantMenu/"+resId
       );
-      return;
+      const jsonData = await response.json();
+
+      const resData = jsonData;
+
+      setResInfo(resData);
+    } catch (error) {
+      console.error("Error fetching menu:", error.message);
     }
+  };
 
-    if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`);
-    }
-
-    const contentType = response.headers.get("content-type");
-
-    if (!contentType?.includes("application/json")) {
-      throw new Error("Response is not JSON");
-    }
-
-    const jsonData = await response.json();
-
-    console.log("Restaurant Menu Data:", jsonData);
-  } catch (error) {
-    console.error("Error fetching menu:", error.message);
+  if (resInfo === null) {
+    return <Shimmer />;
   }
-};
 
+  const { name, areaName, costForTwo, cuisines } =
+    resInfo?.data?.cards[2]?.card?.card?.info;
+  const menuItems =
+    resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards ?? [];
 
-  return <h1>Restaurant Menu</h1>;
+  return (
+    <div className="resturant-menu-container">
+      <div className="resturant-details">
+        <h2>{name}</h2>
+        <h3>{areaName}</h3>
+        <h3>{costForTwo}</h3>
+        <h3>{cuisines.join(",")}</h3>
+      </div>
+      <div className="resturant-menu">
+        {menuItems.map((item, index) => (
+          <div key={index}>
+            {item?.card?.card?.itemCards?.map((foodItem) => (
+              <h4 key={foodItem?.card?.info?.id}>
+                {foodItem?.card?.info?.name}
+              </h4>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default ResturantMenu;

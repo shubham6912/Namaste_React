@@ -1,7 +1,7 @@
-
 import ResturantCard from "./ResturantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
@@ -17,7 +17,8 @@ const Body = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9476696&lng=77.6891689&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9476696&lng=77.6891689&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        "https://namastedev.com/api/v1/listRestaurants",
       );
 
       if (!response.ok) {
@@ -27,12 +28,8 @@ const Body = () => {
       const jsonData = await response.json();
 
       const restaurants =
-        jsonData?.data?.cards?.find(
-          (item) =>
-            item?.card?.card?.gridElements?.infoWithStyle
-              ?.restaurants
-        )?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ?? [];
+        jsonData?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants;
 
       setListOfResturants(restaurants);
       setFilteredResturantList(restaurants);
@@ -45,11 +42,8 @@ const Body = () => {
   };
 
   const handleSearch = () => {
-    const filteredList = filteredResturantList.filter(
-      (res) =>
-        res.info.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase())
+    const filteredList = filteredResturantList.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase()),
     );
 
     setListOfResturants(filteredList);
@@ -57,7 +51,7 @@ const Body = () => {
 
   const handleTopRated = () => {
     const filteredList = filteredResturantList.filter(
-      (res) => Number(res.info.avgRating) > 4.3
+      (res) => Number(res.info.avgRating) > 4.3,
     );
 
     setListOfResturants(filteredList);
@@ -70,14 +64,11 @@ const Body = () => {
   if (error) {
     return <p className="error-message">{error}</p>;
   }
-  
 
   return (
     <div className="body-container">
-
       {/* Search and Filter Section */}
       <div className="filter-container">
-
         <div className="search-container">
           <input
             className="search-input"
@@ -87,37 +78,31 @@ const Body = () => {
             onChange={(e) => setSearchText(e.target.value)}
           />
 
-          <button
-            className="search-btn"
-            onClick={handleSearch}
-          >
+          <button className="search-btn" onClick={handleSearch}>
             Search
           </button>
         </div>
 
-        <button
-          className="filter-btn"
-          onClick={handleTopRated}
-        >
+        <button className="filter-btn" onClick={handleTopRated}>
           Top Restaurants by Rating
         </button>
-
       </div>
 
       {/* Restaurant Cards */}
       <div className="resturant-container">
         {listOfResturants.length > 0 ? (
           listOfResturants.map((resturant) => (
-            <ResturantCard
+            <Link
               key={resturant.info.id}
-              resData={resturant}
-            />
+              to={"/restaurant/" + resturant.info.id}
+            >
+              <ResturantCard resData={resturant} />
+            </Link>
           ))
         ) : (
           <p>No restaurants found.</p>
         )}
       </div>
-
     </div>
   );
 };
