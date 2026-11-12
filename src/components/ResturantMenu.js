@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import { json, useParams } from "react-router-dom";
 import { useState } from "react";
 import Shimmer from "./Shimmer";
+import { BASE_URL } from "../utils/constants";
+import { VERSION } from "../utils/constants";
+import { LIST_MENU } from "../utils/constants";
 
 const ResturantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
-  const {resId} = useParams();
+  const { resId } = useParams();
 
   useEffect(() => {
     fetchMenu();
@@ -13,9 +16,7 @@ const ResturantMenu = () => {
 
   const fetchMenu = async () => {
     try {
-      const response = await fetch(
-        "https://namastedev.com/api/v1/listRestaurantMenu/"+resId
-      );
+      const response = await fetch(BASE_URL + VERSION + LIST_MENU + resId);
       const jsonData = await response.json();
 
       const resData = jsonData;

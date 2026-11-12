@@ -2,7 +2,9 @@ import ResturantCard from "./ResturantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-
+import { BASE_URL } from "../utils/constants";
+import { VERSION } from "../utils/constants";
+import { LIST_RESTAURANT } from "../utils/constants";
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
   const [filteredResturantList, setFilteredResturantList] = useState([]);
@@ -16,10 +18,7 @@ const Body = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9476696&lng=77.6891689&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        "https://namastedev.com/api/v1/listRestaurants",
-      );
+      const response = await fetch(BASE_URL + VERSION + LIST_RESTAURANT);
 
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
