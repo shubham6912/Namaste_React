@@ -1,13 +1,9 @@
-import ResturantCard from "./ResturantCard";
+import ResturantCard, { withPromotedLabel } from "./ResturantCard";
 import { useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import {
-  BASE_URL,
-  VERSION,
-  LIST_RESTAURANT,
-} from "../utils/constants";
+import { BASE_URL, VERSION, LIST_RESTAURANT } from "../utils/constants";
 
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
@@ -17,6 +13,7 @@ const Body = () => {
   const [error, setError] = useState("");
 
   const onlineStatus = useOnlineStatus();
+  const RestaurantCardPromoted = withPromotedLabel(ResturantCard);
 
   useEffect(() => {
     fetchData();
@@ -24,9 +21,7 @@ const Body = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        BASE_URL + VERSION + LIST_RESTAURANT
-      );
+      const response = await fetch(BASE_URL + VERSION + LIST_RESTAURANT);
 
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
@@ -35,8 +30,8 @@ const Body = () => {
       const jsonData = await response.json();
 
       const restaurants =
-        jsonData?.data?.data?.cards?.[1]?.card?.card
-          ?.gridElements?.infoWithStyle?.restaurants ?? [];
+        jsonData?.data?.data?.cards?.[1]?.card?.card?.gridElements
+          ?.infoWithStyle?.restaurants ?? [];
 
       setListOfResturants(restaurants);
       setFilteredResturantList(restaurants);
@@ -50,7 +45,7 @@ const Body = () => {
 
   const handleSearch = () => {
     const filteredList = filteredResturantList.filter((res) =>
-      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+      res.info.name.toLowerCase().includes(searchText.toLowerCase()),
     );
 
     setListOfResturants(filteredList);
@@ -58,7 +53,7 @@ const Body = () => {
 
   const handleTopRated = () => {
     const filteredList = filteredResturantList.filter(
-      (res) => Number(res.info.avgRating) > 4.3
+      (res) => Number(res.info.avgRating) > 4.3,
     );
 
     setListOfResturants(filteredList);
@@ -77,23 +72,18 @@ const Body = () => {
   }
 
   if (error) {
-    return (
-      <p className="p-10 text-center font-medium text-error">
-        {error}
-      </p>
-    );
+    return <p className="p-10 text-center font-medium text-error">{error}</p>;
   }
 
   return (
     <main className="min-h-screen px-4 py-8 md:px-8 lg:px-12">
-
       {/* Search and Filter Section */}
-      <div className="mb-8 flex flex-col gap-4
-        md:flex-row md:items-center md:justify-between">
-
+      <div
+        className="mb-8 flex flex-col gap-4
+        md:flex-row md:items-center md:justify-between"
+      >
         {/* Search Container */}
         <div className="flex w-full max-w-[650px] items-center gap-3">
-
           <input
             className="min-w-0 flex-1 rounded-lg border border-line
               bg-white px-4 py-3 text-sm outline-none
@@ -130,10 +120,11 @@ const Body = () => {
       </div>
 
       {/* Restaurant Grid */}
-      <div className="grid grid-cols-1 gap-6
+      <div
+        className="grid grid-cols-1 gap-6
         sm:grid-cols-2 md:grid-cols-3
-        xl:grid-cols-4 2xl:grid-cols-5">
-
+        xl:grid-cols-4 2xl:grid-cols-5"
+      >
         {listOfResturants.length > 0 ? (
           listOfResturants.map((resturant) => (
             <Link
@@ -141,7 +132,11 @@ const Body = () => {
               key={resturant.info.id}
               to={"/restaurant/" + resturant.info.id}
             >
-              <ResturantCard resData={resturant} />
+              {resturant.info.avgRatingString < "4.3" ? (
+                <RestaurantCardPromoted resData={resturant} />
+              ) : (
+                <ResturantCard resData={resturant} />
+              )}
             </Link>
           ))
         ) : (
@@ -149,7 +144,6 @@ const Body = () => {
             No restaurants found.
           </p>
         )}
-
       </div>
     </main>
   );
