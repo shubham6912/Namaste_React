@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { CDN_URL } from "../utils/constants";
+import fallbackImage from "url:../../public/fallback-food.png";
 
 const ResturantMenu = () => {
   const { resId } = useParams();
@@ -11,12 +13,8 @@ const ResturantMenu = () => {
     return <Shimmer />;
   }
 
-  const {
-    name,
-    areaName,
-    costForTwo,
-    cuisines,
-  } = resInfo?.data?.cards?.[2]?.card?.card?.info ?? {};
+  const { name, areaName, costForTwo, cuisines } =
+    resInfo?.data?.cards?.[2]?.card?.card?.info ?? {};
 
   const menuItems =
     resInfo?.data?.cards?.[4]?.groupedCard
@@ -29,8 +27,7 @@ const ResturantMenu = () => {
       <div className="mb-8 rounded-2xl border border-line
         bg-white p-5 shadow-sm md:p-8">
 
-        <h1 className="mb-3 text-2xl font-bold text-ink
-          md:text-3xl">
+        <h1 className="mb-3 text-2xl font-bold text-ink md:text-3xl">
           {name}
         </h1>
 
@@ -82,16 +79,75 @@ const ResturantMenu = () => {
               {/* Food Items */}
               <div className="divide-y divide-line">
 
-                {foodItems.map((foodItem) => (
-                  <h4
-                    key={foodItem?.card?.info?.id}
-                    className="px-5 py-4 font-medium text-ink
-                      transition-colors hover:bg-primary/5
-                      hover:text-primary"
-                  >
-                    {foodItem?.card?.info?.name}
-                  </h4>
-                ))}
+                {foodItems.map((foodItem) => {
+                  const {
+                    id,
+                    name,
+                    description,
+                    imageId,
+                    price,
+                    defaultPrice,
+                  } = foodItem?.card?.info ?? {};
+
+                  const itemPrice = price ?? defaultPrice;
+
+                  return (
+                    <div
+                      key={id}
+                      className="flex items-start justify-between
+                        gap-4 p-5 transition-colors
+                        hover:bg-primary/5"
+                    >
+
+                      {/* Food Information */}
+                      <div className="min-w-0 flex-1">
+
+                        <h4 className="text-base font-bold
+                          text-ink md:text-lg">
+                          {name}
+                        </h4>
+
+                        {itemPrice != null && (
+                          <p className="mt-1 font-semibold text-ink">
+                            ₹{itemPrice / 100}
+                          </p>
+                        )}
+
+                        {description && (
+                          <p className="mt-2 line-clamp-3 text-sm
+                            leading-relaxed text-muted">
+                            {description}
+                          </p>
+                        )}
+
+                      </div>
+
+                      {/* Food Image */}
+                      <div className="shrink-0">
+                        <img
+                          className="h-24 w-24 rounded-xl
+                            object-cover md:h-32 md:w-32"
+                          src={
+                            imageId
+                              ? CDN_URL + imageId
+                              : fallbackImage
+                          }
+                          alt={name || "Food item"}
+                          loading="lazy"
+                          onError={(e) => {
+                            if (
+                              e.currentTarget.getAttribute("src")
+                                !== fallbackImage
+                            ) {
+                              e.currentTarget.src = fallbackImage;
+                            }
+                          }}
+                        />
+                      </div>
+
+                    </div>
+                  );
+                })}
 
               </div>
             </section>
