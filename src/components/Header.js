@@ -19,9 +19,7 @@ const Header = () => {
 
       <nav className="navItem">
         <ul>
-          <li>
-            Online Status: {onlineStatus ? "🟢" : "🔴"}
-          </li>
+          <li>Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -30,6 +28,9 @@ const Header = () => {
           </li>
           <li>
             <Link to="/contact">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/grocery"> Grocerry</Link>
           </li>
           <li>Cart</li>
           <li>
