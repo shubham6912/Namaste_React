@@ -1,17 +1,21 @@
 import ResturantCard from "./ResturantCard";
 import { useEffect, useState } from "react";
+import useOnlineStatus from "../utils/useOnlineStatus";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { VERSION } from "../utils/constants";
 import { LIST_RESTAURANT } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
   const [filteredResturantList, setFilteredResturantList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const onlineStatus = useOnlineStatus();
 
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -60,9 +64,19 @@ const Body = () => {
     return <Shimmer />;
   }
 
+  if (!onlineStatus) {
+    return (
+      <h1>
+        Looks like you are offline. Please check your internet connection.
+      </h1>
+    );
+  }
+  
   if (error) {
     return <p className="error-message">{error}</p>;
   }
+
+  
 
   return (
     <div className="body-container">
