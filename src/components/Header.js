@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "url:../../public/FoodCardLogo.png";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Header = () => {
   const [logInLogOut, setLogInLogOut] = useState("Login");
@@ -9,6 +10,7 @@ const Header = () => {
     setLogInLogOut((prev) => (prev === "Login" ? "Logout" : "Login"));
   };
 
+  const onlineStatus = useOnlineStatus();
   return (
     <div className="header">
       <div className="logo">
@@ -17,6 +19,9 @@ const Header = () => {
 
       <nav className="navItem">
         <ul>
+          <li>
+            Online Status: {onlineStatus ? "🟢" : "🔴"}
+          </li>
           <li>
             <Link to="/">Home</Link>
           </li>
